@@ -1,6 +1,5 @@
-### Repository for RL homeworks (SPBAU - 6 term)
+### Exercise 3
 
-Each task is placed in its own branch:
-* `hw2` — lion and cow grid; policy iteration; value iteration
-* `hw3` — blackjack game and on-policy first visit MC control algorithm
-* `hw4` — lion and cow grid modification; SARSA and Q learning; MC and DP implementations
+File `task3.py` contains blackjack game implementation, on-policy first visit MC control algorithm implementation and applying it to the game.
+
+`avg_win_score_plot.png` is a result plot.
