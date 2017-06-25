@@ -1,6 +1,9 @@
-### Repository for RL homeworks (SPBAU - 6 term)
+### Exercise 4
 
-Each task is placed in its own branch:
-* `hw2` — lion and cow grid; policy iteration; value iteration
-* `hw3` — blackjack game and on-policy first visit MC control algorithm
-* `hw4` — lion and cow grid modification; SARSA and Q learning; MC and DP implementations
+Folder `plots` contains plots illustrated results of the sarsa and q learning algorithms.
+
+File `new_grid_modifications.py` contais different implementations of the lion and cow grid (according to each task ang algorithm).
+
+File `task4_q_sarsa.py` contains implementations of sarsa and q learning algorithms (on grids with different number of cows).
+
+File `task4_mc_dp.py` contains implementations of dp value iteration and on policy first visit MC control algorithms (on grids with different number of cows).
