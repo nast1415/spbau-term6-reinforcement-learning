@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from new_grid_modification import GridCell, Grid
+from new_grid_modification import GridMod1
 
 
 # SARSA algorithm implementation
@@ -31,14 +31,14 @@ def sarsa_algorithm(grid, number_of_episodes, alpha, gamma):
                 for x1, y1, cow1 in grid.grid_desk:
                     if x1 == x and y1 == y:
                         is_cow_flag &= grid.grid_desk[x, y, cow1].is_cow_in_cell
-                grid.grid_desk[x, y, cows_number] = GridCell(x, y, is_cow_flag, grid.size_of_grid, cows_number)
+                grid.grid_desk[x, y, cows_number] = GridCellMod1(x, y, is_cow_flag, grid.size_of_grid, cows_number)
 
             # If after the step we're in the cell with cow, we will take this cow and set 'is_cow_in_cell' flag to False
             # for the grid cell with this coordinates and number_of_cows = current_number_of_cows + 1
             # (to prevent the situation when we take this cow another time just after we take it)
             if grid.grid_desk[x, y, cows_number].is_cow_in_cell:
                 if (x, y, cows_number + 1) not in grid.grid_desk.keys():
-                    grid.grid_desk[x, y, cows_number + 1] = GridCell(x, y, False, grid.size_of_grid, cows_number + 1)
+                    grid.grid_desk[x, y, cows_number + 1] = GridCellMod1(x, y, False, grid.size_of_grid, cows_number + 1)
                 s_new = grid.grid_desk[x, y, cows_number + 1]
             else:
                 s_new = grid.grid_desk[x, y, cows_number]
@@ -48,7 +48,7 @@ def sarsa_algorithm(grid, number_of_episodes, alpha, gamma):
 
             # Re-calculate q value
             x_next, y_next, action_id_next = s_new.make_step()
-            s.value[action_id] += alpha * (r + gamma * s_new.value[action_id_next] - s.value[action_id])
+            s.q_func[action_id] += alpha * (r + gamma * s_new.q_func[action_id_next] - s.q_func[action_id])
 
             # Add current reward (for plot)
             reward_during_episode += r
@@ -95,14 +95,14 @@ def q_learning_algorithm(grid, number_of_episodes, alpha, gamma):
                 for x1, y1, cow1 in grid.grid_desk:
                     if x1 == x and y1 == y:
                         is_cow_flag &= grid.grid_desk[x, y, cow1].is_cow_in_cell
-                grid.grid_desk[x, y, cows_number] = GridCell(x, y, is_cow_flag, grid.size_of_grid, cows_number)
+                grid.grid_desk[x, y, cows_number] = GridCellMod1(x, y, is_cow_flag, grid.size_of_grid, cows_number)
 
             # If after the step we're in the cell with cow, we will take this cow and set 'is_cow_in_cell' flag to False
             # for the grid cell with this coordinates and number_of_cows = current_number_of_cows + 1
             # (to prevent the situation when we take this cow another time just after we take it)
             if grid.grid_desk[x, y, cows_number].is_cow_in_cell:
                 if (x, y, cows_number + 1) not in grid.grid_desk.keys():
-                    grid.grid_desk[x, y, cows_number + 1] = GridCell(x, y, False, grid.size_of_grid, cows_number + 1)
+                    grid.grid_desk[x, y, cows_number + 1] = GridCellMod1(x, y, False, grid.size_of_grid, cows_number + 1)
                 s_new = grid.grid_desk[x, y, cows_number + 1]
             else:
                 s_new = grid.grid_desk[x, y, cows_number]
@@ -110,7 +110,7 @@ def q_learning_algorithm(grid, number_of_episodes, alpha, gamma):
             # Get reward after making a step
             r = grid.get_reward(s_new)
 
-            s.value[action_id] += alpha * (r + gamma * max(s_new.value) - s.value[action_id])
+            s.q_func[action_id] += alpha * (r + gamma * max(s_new.q_func) - s.q_func[action_id])
 
             # Add current reward (for plot)
             reward_during_episode += r
@@ -134,9 +134,9 @@ def main():
     cows_array_2 = [(2, 2), (0, 2)]
     cows_array_3 = [(2, 2), (0, 2), (2, 0)]
 
-    grid1 = Grid(size_of_grid, cows_array_1)
-    grid2 = Grid(size_of_grid, cows_array_2)
-    grid3 = Grid(size_of_grid, cows_array_3)
+    grid1 = GridMod1(size_of_grid, cows_array_1)
+    grid2 = GridMod1(size_of_grid, cows_array_2)
+    grid3 = GridMod1(size_of_grid, cows_array_3)
 
     # Set parameters for the q learning and SARSA algorithms
     alpha = 1
